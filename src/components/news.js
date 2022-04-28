@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+
 import store from '../redux/store'
 
 let query = 'tesla'
@@ -22,7 +25,7 @@ export default function News() {
                 posts.splice(store.getState()['newsNumber'])//пишу через сплайс потому что не нашел параметр в доках(вроде бы его там нет)
 
                 setValue(posts)
-            }) 
+            })
     };
 
     useEffect(() => {
@@ -33,38 +36,41 @@ export default function News() {
     return (
         <div>
             <div className='searchOptions'>
-            {page}
-            <input onKeyDown={e => {
-                if (e.key === 'Enter') {
-                    page = (1)
-                    query = (e.target.value)
-                    loadNews(e.target.value, page)
-                }
-            }} />
+                {page}
+                <input onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                        page = (1)
+                        query = (e.target.value)
+                        loadNews(e.target.value, page)
+                    }
+                }} />
 
-            <button onClick={() => {
-                page = (page - 1);
-                if (page === 0) page = (1);
-                loadNews(query, page)
-            }}>prev</button>
+                <button onClick={() => {
+                    page = (page - 1);
+                    if (page === 0) page = (1);
+                    loadNews(query, page)
+                }}>prev</button>
 
-            <button onClick={() => {
-                page = (page + 1);
-                loadNews(query, page)
-            }}>next</button>
+                <button onClick={() => {
+                    page = (page + 1);
+                    if (page === 6) page = (5);
+                    loadNews(query, page)
+                }}>next</button>
             </div>
             <div className='newsContainer'>
-            {value.map(el => {
-                return (
-                    <div className='newspaperElement'> 
-                        <img src={el.urlToImage} className='newspaperImage'/>
-                        <div><h3>{el.title}</h3></div>
-                        <div> {el.content} </div>
-                        <a href={el.url}>go to </a>
-                        <div>Author: {el.author}</div>
-                    </div>
-                )
-            })}
+                {value.map(el => {
+                    return (
+                        <div className='newspaperElement'>
+                            <Zoom>
+                                <img src={el.urlToImage} className='newspaperImage' />
+                            </Zoom>
+                            <div><h3>{el.title}</h3></div>
+                            <div> {el.content} </div>
+                            <a href={el.url}>go to </a>
+                            <div>Author: {el.author}</div>
+                        </div>
+                    )
+                })}
             </div>
         </div>
     );
