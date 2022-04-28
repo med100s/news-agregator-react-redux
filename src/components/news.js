@@ -10,6 +10,7 @@ import store from '../redux/store'
 let query = 'tesla'
 let page = 1
 const apiKey = 'a9e662d79851404b867ac06b5a038b8e';
+
 export default function News() {
 
     const [value, setValue] = useState([])
@@ -34,10 +35,12 @@ export default function News() {
 
 
     return (
-        <div>
+        <div> 
             <div className='searchOptions'>
                 {page}
-                <input onKeyDown={e => {
+                <input
+                placeholder='tesla'
+                onKeyDown={e => {
                     if (e.key === 'Enter') {
                         page = (1)
                         query = (e.target.value)
@@ -57,6 +60,7 @@ export default function News() {
                     loadNews(query, page)
                 }}>next</button>
             </div>
+
             <div className='newsContainer'>
                 {value.map(el => {
                     return (
@@ -72,6 +76,7 @@ export default function News() {
                     )
                 })}
             </div>
+
         </div>
     );
 }

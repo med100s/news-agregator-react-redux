@@ -18,13 +18,11 @@ import store from './redux/store'
    
 function App() {
 
-  store.subscribe(() => {
-    var body = document.body
+  store.subscribe(() => { 
+    document.body.style.fontSize = store.getState()['fontSize'] + 'px'
 
-    body.style.fontSize = store.getState()['fontSize'] + 'px'
-
-    if (store.getState().theme === 'light')  body.className ='theme-light'
-    else if (store.getState().theme === 'dark')  body.className ='theme-dark'
+    if (store.getState().theme === 'light')  document.body.className ='theme-light'
+    else if (store.getState().theme === 'dark')  document.body.className ='theme-dark'
   })
  
   useEffect(()=>{ 
